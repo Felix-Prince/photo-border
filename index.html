@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Upload Image</title>
+
+        <style>
+            #content {
+                padding: 20px;
+                border: 1px solid #ccc;
+            }
+            /* canvas {
+                width: 1024px;
+                box-shadow: 6px 6px 8px rgba(0, 0, 0, 0.5);
+            } */
+            /* img {
+                width: 1024px;
+                box-shadow: 6px 6px 8px rgba(0, 0, 0, 0.5);
+            } */
+            #content > div {
+                height: 120px;
+                margin: 0;
+                display: flex;
+                justify-content: flex-end;
+                padding: 0 20px;
+            }
+
+            #content > img {
+                width: 100%;
+                margin: 0;
+            }
+
+            #content > div div {
+                width: 200px;
+                margin-right: 30px;
+            }
+
+            #content > div div img {
+                width: 100%;
+                margin-top: 40px;
+            }
+            #content > div p {
+                font-size: 24px;
+                margin: 0;
+                padding: 0;
+                line-height: 120px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Upload Image</h1>
+        <input type="file" id="photoInput" accept="image/*" />
+        <input type="file" id="logoInput" accept="image/*" />
+        <button onclick="saveDivAsImage()">Save as Image</button>
+        <pre id="result"></pre>
+        <div id="content">
+            <img id="uploadedImage" src="" alt="Uploaded Image" />
+            <div>
+                <div>
+                    <img id="logo" src="" alt="fujifilm" />
+                </div>
+                <p id="avg">X-T30 II ISO320 1/60 48.6mm</p>
+            </div>
+        </div>
+        <canvas id="canvas"></canvas>
+
+        <script src="https://cdn.jsdelivr.net/npm/exif-js"></script>
+        <script src="html2canvas.min.js"></script>
+        <script src="./util.js"></script>
+        <script src="./fn.js"></script>
+        <script>
+            // console.log(decimalToFraction(0.016666666666666666))
+            console.log(number2fraction(0.016666666666666666, true))
+            document
+                .getElementById("photoInput")
+                .addEventListener("change", function (event) {
+                    const file = event.target.files[0]
+                    console.log(file, EXIF)
+                    const reader = new FileReader()
+                    reader.onload = function (e) {
+                        document.getElementById("uploadedImage").src =
+                            e.target.result
+                    }
+
+                    reader.readAsDataURL(file)
+                    if (file) {
+                        EXIF.getData(file, function () {
+                            const {
+                                Make,
+                                Model,
+                                ISOSpeedRatings,
+                                ExposureTime,
+                                FocalLength,
+                            } = EXIF.getAllTags(this)
+                            // console.log(exifData)
+                            document.getElementById(
+                                "result"
+                            ).innerText = `相机型号：${Make}\t型号：${Model}\tISO：${ISOSpeedRatings}\t快门：${ExposureTime}\t焦距：${FocalLength}\t`
+
+                            document.getElementById(
+                                "avg"
+                            ).innerText = `${Model}\tISO${ISOSpeedRatings}\t快门：${ExposureTime}\t焦距：${FocalLength}\t`
+
+                            // Make/Model/ISOSpeedRatings/ExposureTime/FocalLength/
+                            // 相机类型、型号、iso、快门、焦距、光圈
+                            // document.getElementById("result").textContent =
+                            //     JSON.stringify({ exifData, makerNote }, null, 2)
+                        })
+                    }
+                })
+            document
+                .getElementById("logoInput")
+                .addEventListener("change", function (event) {
+                    const file = event.target.files[0]
+                    console.log(file, EXIF)
+                    const reader = new FileReader()
+                    reader.onload = function (e) {
+                        document.getElementById("logo").src = e.target.result
+                    }
+
+                    reader.readAsDataURL(file)
+                })
+
+            function saveDivAsImage() {
+                const element = document.getElementById("content")
+
+                html2canvas(element, { useCORS: true, allowTaint: true }).then(
+                    function (canvas) {
+                        const imgData = canvas.toDataURL("image/png")
+
+                        // // 创建一个链接元素，设置图片数据作为 URL
+                        const link = document.createElement("a")
+                        link.href = imgData
+                        link.download = "div-image.png" // 下载文件名
+                        link.click()
+                        // const canvas = document.getElementById("canvas")
+                        // // 获取 canvas 的 2D 上下文
+                        // const ctx = canvas.getContext("2d")
+                        // // ctx.clearRect(0, 0, canvas.width, canvas.height)
+                        // // 将图像绘制到 canvas 上
+                        // ctx.drawImage(imgData, 0, 0)
+                    }
+                )
+            }
+        </script>
+    </body>
+</html>
