@@ -1,0 +1,38 @@
+[
+    {
+        "Make": "FUJIFILM",
+        "Model": "X-T30 II",
+        "ExposureTime": 0.016666666666666666,
+        "FocalLength": 48.6,
+        "LensMake": "TAMRON",
+        "LensModel": "18-300mm F/3.5-6.3 DiIII-A VC VXD B061X",
+        "ApertureValue": 5.7
+    },
+    {
+        "Make": "FUJIFILM",
+        "Model": "X-T30 II",
+        "ExposureTime": 0.005555555555555556,
+        "FocalLength": 300,
+        "LensMake": "TAMRON",
+        "LensModel": "18-300mm F/3.5-6.3 DiIII-A VC VXD B061X",
+        "ApertureValue": 8.3
+    },
+    {
+        "Make": "FUJIFILM",
+        "Model": "X-T30 II",
+        "ExposureTime": 0.005555555555555556,
+        "FocalLength": 25.4,
+        "LensMake": "TAMRON",
+        "LensModel": "18-300mm F/3.5-6.3 DiIII-A VC VXD B061X",
+        "ApertureValue": 9.3
+    },
+    {
+        "Make": "FUJIFILM",
+        "Model": "X-T30 II",
+        "ExposureTime": 0.03333333333333333,
+        "FocalLength": 27.5,
+        "LensMake": "TAMRON",
+        "LensModel": "18-300mm F/3.5-6.3 DiIII-A VC VXD B061X",
+        "ApertureValue": 5.3
+    }
+]
